@@ -1,0 +1,22 @@
+被动式发现TCP服务，IP：x.x.195.44,主机名：hostname，端口：3306,服务名称：mysql，模式：banner
+发现TCP端口跟banner但是没有识别出服务，IP：x.x.195.37,主机名：bogon，端口：22222,banner：   ___   __  __ ___   ___   ____     
+  / _ \ / / / // _ ) / _ ) / __ \  
+ / // // /_/ // _  |/ _  |/ /_/ /    
+/____/ \____//____//____/ \____/   
+dubbo>
+被动式发现TCP服务，IP：x.x.195.34,主机名：bogon，端口：139,服务名称：netbios，模式：default
+被动式发现TCP服务，IP：x.x.195.34,主机名：bogon，端口：445,服务名称：smb，模式：default
+被动式发现TCP服务，IP：x.x.195.37,主机名：bogon，端口：139,服务名称：netbios，模式：default
+被动式发现TCP服务，IP：x.x.195.37,主机名：bogon，端口：445,服务名称：smb，模式：default
+被动式发现TCP服务，IP：x.x.195.39,主机名：bogon，端口：139,服务名称：netbios，模式：default
+被动式发现TCP服务，IP：x.x.195.39,主机名：bogon，端口：445,服务名称：smb，模式：default
+被动式发现TCP服务，IP：x.x.195.42,主机名：bogon，端口：139,服务名称：netbios，模式：default
+被动式发现TCP服务，IP：x.x.195.42,主机名：bogon，端口：445,服务名称：smb，模式：default
+被动式发现TCP服务，IP：x.x.195.44,主机名：hostname，端口：445,服务名称：smb，模式：default
+被动式发现TCP服务，IP：x.x.195.44,主机名：hostname，端口：139,服务名称：netbios，模式：default
+主动式发现TCP服务，IP：x.x.195.34,主机名：bogon，端口：3389,服务名称：rdp
+主动式发现TCP服务，IP：x.x.195.37,主机名：bogon，端口：3389,服务名称：rdp
+主动式发现TCP服务，IP：x.x.195.39,主机名：bogon，端口：3389,服务名称：rdp
+主动式发现TCP服务，IP：x.x.195.42,主机名：bogon，端口：3389,服务名称：rdp
+主动式发现TCP服务，IP：x.x.195.44,主机名：hostname，端口：3389,服务名称：rdp
+主动式发现TCP服务，IP：x.x.195.44,主机名：hostname，端口：27017,服务名称：mongodb
