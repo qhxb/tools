@@ -11,7 +11,7 @@ api = shodan.Shodan(SHODAN_API_KEY)
 
 def scan(query):
     try:
-        maxi = 1000
+        maxi = 10
         FACETS = [('ip', maxi)]
         result = api.count(query, facets=FACETS)
         if result['total']:
