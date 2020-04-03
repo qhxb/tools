@@ -1,16 +1,18 @@
+# -*- coding: utf-8 -*-
 import threading
 import requests
 import shodan
 from bs4 import BeautifulSoup
 
 requests.packages.urllib3.disable_warnings()
-thread_num = 3
+thread_num = 2
 SHODAN_API_KEY = "xxx"
 api = shodan.Shodan(SHODAN_API_KEY)
 
 
 def scan(query):
     try:
+        #shodan结果如果不为空，需要进一步手工分析
         maxi = 10
         FACETS = [('ip', maxi)]
         result = api.count(query, facets=FACETS)
@@ -39,13 +41,22 @@ def getsha1(ids):
 
 if __name__ == '__main__':
     all_threads = []
-    with open('./id.txt', 'r') as fo:
-        ids = (x for x in fo.readlines())
-    for _ in range(thread_num):
-        t = threading.Thread(target=getsha1, args=(ids,))
-        all_threads.append(t)
-        t.start()
-    for t in all_threads:
-        t.join()
-
-        
+    idlist = []
+    # crt.sh访问有频率限制，不能并发太高
+    try:
+        with open('./domain.txt', 'r') as fo:
+            for domain in fo.readlines():
+                res = requests.request("get", "https://crt.sh/?q="+domain.strip(), verify=False)
+                soup = BeautifulSoup(res.text, 'lxml')
+                texts = soup.find_all(attrs={'style': 'text-align:center'})
+                for i in texts:
+                    idlist.append(i.text)
+        ids = (i for i in idlist)
+        for _ in range(thread_num):
+            t = threading.Thread(target=getsha1, args=(ids,))
+            all_threads.append(t)
+            t.start()
+        for t in all_threads:
+            t.join()
+    except Exception,e:
+        print e
