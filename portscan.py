@@ -71,7 +71,7 @@ def tcp_scan(ip, port_iter, feature):
 if __name__ == '__main__':
     thread_num = 50
     re_baner = b"ssh"
-    ip_quen = '192.168.0.1-192.168.1.255'
+    ip_quen = '192.168.198.200-192.168.198.220'
 
     lock = threading.Lock()
     time_out = 3
@@ -89,16 +89,5 @@ if __name__ == '__main__':
 
         for i in range(thread_num):
             t = threading.Thread(target=tcp_scan, args=(Ip, port_iter_list, re_baner,))
-            t.setDaemon(True)
             t.start()
-            all_threads.append(t)
-    while True:
-        time.sleep(1)
-        for j in all_threads:
-            if not j.is_alive():
-                all_threads.remove(j)
-        if not all_threads:
-            print('scan end')
-            break
 
-            
