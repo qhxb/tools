@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 requests.packages.urllib3.disable_warnings()
 thread_num = 1
-SHODAN_API_KEY = "xxx"
+SHODAN_API_KEY = "ssss"
 api = shodan.Shodan(SHODAN_API_KEY)
 
 
@@ -19,15 +19,15 @@ def scan(query):
         FACETS = [('ip', maxi)]
         result = api.count(query, facets=FACETS)
         if result['total']:
-            print query
-    except Exception, e:
+            print(query, result)
+    except Exception as e:
         pass
 
 
 def getsha1(ids):
     while True:
         try:
-            id = ids.next()
+            id = next(ids)
         except StopIteration:
             return
         except:
@@ -36,16 +36,16 @@ def getsha1(ids):
             if id.strip():
                 time.sleep(1)
                 detailurl = "https://crt.sh/?id=" + str(id.strip())
-                res = requests.request("get", detailurl, verify=False)
-                soup = BeautifulSoup(res.text, 'lxml')
+                res = requests.request("get", detailurl, verify=False, timeout=8)
+                soup = BeautifulSoup(res.text, 'html.parser')
                 # 过滤cdn
                 texts = soup.find_all("td", class_='text')
                 org = re.search(r'commonName.*.countryName', texts[0].text).group()
                 if org.find('CDNetworks') == -1:
-                    texts2 = soup.find_all("td", class_='outer')
-                    scan('ssl:' + texts2[-1].text.lower())
-        except Exception, e:
-            print e, res, id
+                    texts2 = BeautifulSoup(res.text, 'html.parser').select('.options')[-1].select('td')[-1].text
+                    scan('ssl:' + texts2.lower())
+        except Exception as e:
+            print(e,id)
 
 
 if __name__ == '__main__':
@@ -56,9 +56,9 @@ if __name__ == '__main__':
         with open('./domain.txt', 'r') as fo:
             for domain in fo.readlines():
                 time.sleep(1)
-                certurl = "https://crt.sh/?q="+domain.strip()
-                res = requests.request("get", certurl, verify=False)
-                soup = BeautifulSoup(res.text, 'lxml')
+                certurl = "https://crt.sh/?q=" + domain.strip()
+                res = requests.request("get", certurl, verify=False, timeout=8)
+                soup = BeautifulSoup(res.text, 'html.parser')
                 texts = soup.find_all(attrs={'style': 'text-align:center'})
                 for i in texts:
                     idlist.append(i.text)
@@ -69,5 +69,6 @@ if __name__ == '__main__':
             t.start()
         for t in all_threads:
             t.join()
-    except Exception,e:
-        print e
+    except Exception as e:
+        print(e)
+
