@@ -2,3 +2,6 @@
 /trace
 /jolokia/list
 /service/extdirect
+/druid/websession.html
+/system/druid/websession.html
+/webpage/system/druid/websession.html
